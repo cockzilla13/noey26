@@ -1,0 +1,39 @@
+<svg width="52" height="52" viewBox="0 0 52 52" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="petalIvory" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#FFFDF7"/>
+      <stop offset="60%" stop-color="#F7F1E5"/>
+      <stop offset="100%" stop-color="#E9DDC7"/>
+    </linearGradient>
+
+    <radialGradient id="shineIvory" cx="35%" cy="20%" r="70%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity=".8"/>
+      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <path
+    d="M26 6
+       C35 11 39 23 32 39
+       C29 45 24 48 26 46
+       C28 48 23 45 20 39
+       C13 23 17 11 26 6Z"
+    fill="url(#petalIvory)"
+    stroke="#D8CCB2"
+    stroke-width=".9"/>
+
+  <path
+    d="M26 9
+       C27 18 27 31 26 43"
+    stroke="#D9CDB6"
+    stroke-width=".8"
+    opacity=".6"/>
+
+  <ellipse
+    cx="22"
+    cy="17"
+    rx="8"
+    ry="12"
+    fill="url(#shineIvory)"
+    transform="rotate(-18 22 17)"/>
+</svg>

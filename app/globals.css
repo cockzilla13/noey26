@@ -1,4 +1,4 @@
-@import "tailwindcss";
+/*@import "tailwindcss";
 
 :root {
   --background: #ffffff;
@@ -23,4 +23,111 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+:root{
+
+--sage:#A8B5A2;
+--ivory:#FFF8E7;
+--offWhite:#F8F6F2;
+--gold:#C8A96A;
+--dark:#556B5D;
+
+}
+
+body{
+
+background:#F8F6F2;
+color:#2c2c2c;
+
+}*/
+
+
+
+@import "tailwindcss";
+
+:root {
+
+  --background: #F8F6F2;
+  --foreground: #2D2D2D;
+
+  --sage: #A8B5A2;
+  --sage-dark: #556B5D;
+  --sage-ligt: #D8E6E0;
+  --sfelted: #A6B8AF;
+  --champ: #E7D8C9;
+  --cfelted:#DBC1AC;
+  --ivory: #FFF8E7;
+
+  --gold: #C8A96A;
+
+  --white: #FFFFFF;
+
+}
+
+html{
+scroll-behavior:smooth;
+}
+
+body{
+
+background:var(--background);
+
+color:var(--foreground);
+
+font-family:var(--font-body);
+
+overflow-x:hidden;
+
+}
+
+h1,h2,h3{
+
+font-family:var(--font-title);
+
+}
+
+blockquote{
+
+font-family:var(--font-script);
+
+}
+.leaf-glow {
+  filter: drop-shadow(0 0 8px rgba(255,255,255,.35));
+}
+
+.light{
+position:absolute;
+top:20%;
+left:50%;
+width:600px;
+height:600px;
+background:white;
+filter:blur(170px);
+opacity:.08;
+animation:lightMove 15s ease-in-out infinite;
+}
+
+@keyframes lightMove{
+
+0%{
+transform:translate(-50%,-50%);
+}
+
+50%{
+transform:translate(-40%,-40%);
+}
+
+100%{
+transform:translate(-50%,-50%);
+}
+
+}
+*{
+
+box-sizing:border-box;
+
+margin:0;
+
+padding:0;
+
 }

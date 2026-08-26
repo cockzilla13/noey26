@@ -1,4 +1,4 @@
-import Image from "next/image";
+/*import Image from "next/image";
 
 export default function Home() {
   return (
@@ -62,4 +62,121 @@ export default function Home() {
       </main>
     </div>
   );
+}
+*/
+
+/*import Navbar from "@/component/Navbar";
+import Hero from "@/component/Hero";
+import Story from "@/component/Story";
+import Gallery from "@/component/Gallery";
+import Program from "@/component/Program";
+import RSVP from "@/component/RSVP";
+import MusicPlayer from "@/component/MusicPlayer";
+import FloatingPetals from "@/component/FloatingPetals";
+import GuestBook from "@/component/GuestBook";
+import Footer from "@/component/Footer";
+
+export default function Home() {
+  return (
+    <>
+	  
+      <Navbar />
+      <Hero />
+	  <Story />
+	  <Gallery />
+	  <Program />
+	  <RSVP />
+	  <MusicPlayer />
+	  <GuestBook />
+	  <FloatingPetals />
+	  <Footer />
+    </>
+  );
+}*/
+
+
+"use client";
+
+import { useState } from "react";
+
+import Loader from "@/component/Loader";
+
+import Navbar from "@/component/Navbar";
+
+import Hero from "@/component/Hero";
+
+import Story from "@/component/Story";
+
+import Gallery from "@/component/Gallery";
+
+import Program from "@/component/Program";
+
+import GuestBook2 from "@/component/GuestBook2";
+
+
+
+import RSVP from "@/component/RSVP";
+
+import GuestBook from "@/component/GuestBook";
+
+import Footer from "@/component/Footer";
+
+import FloatingPetals from "@/component/FloatingPetals";
+
+import MusicPlayer from "@/component/MusicPlayer";
+
+export default function Home(){
+
+/*const [enter,setEnter]=useState(false);
+
+if(!enter){
+
+return(
+
+<Loader
+
+onEnter={()=>setEnter(true)}
+
+/>
+
+)
+
+}*/
+
+const [loaded, setLoaded] = useState(false);
+
+if (!loaded) {
+  return <Loader onFinish={() => setLoaded(true)} />;
+}
+
+return(
+
+<>
+
+<FloatingPetals/>
+
+<MusicPlayer/>
+
+<Navbar/>
+
+<Hero/>
+
+<Story/>
+
+<Gallery/>
+
+<Program/>
+
+<RSVP/>
+
+<GuestBook/>
+
+<GuestBook2/>
+
+<Footer/>
+
+</>
+
+)
+
 }
