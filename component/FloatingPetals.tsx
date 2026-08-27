@@ -80,6 +80,7 @@ export default function FloatingPetals() {
   );
 }*/
 
+/*
 "use client";
 
 import { motion } from "framer-motion";
@@ -93,6 +94,7 @@ const leaves = Array.from({ length: 24 }).map((_, index) => ({
   delay: Math.random() * 12,
   rotate: Math.random() * 360,
 }));
+
 
 export default function FloatingPetals() {
   return (
@@ -151,7 +153,7 @@ export default function FloatingPetals() {
             draggable={false}
 			//className="opacity-80 leaf-glow"
             className="drop-shadow-xl opacity-80"
-          />*/
+          />*
 		   <Image
             src="/particLDr.svg"
             alt=""
@@ -165,6 +167,86 @@ export default function FloatingPetals() {
 
       ))}
 
+    </div>
+  );
+}*/
+
+"use client";
+
+import { motion } from "framer-motion";
+import Image from "next/image";
+
+const leaves = Array.from({ length: 16 }, (_, index) => ({
+  id: index,
+  left: 5 + ((index * 23) % 90),
+  size: 18 + ((index * 7) % 22),
+  duration: 14 + ((index * 3) % 8),
+  delay: (index * 0.8) % 10,
+  rotate: (index * 47) % 360,
+}));
+
+const decorations = [
+  "/eucalyptus.svg",
+  "/petaleBl.svg",
+  "/particLDr.svg",
+];
+
+export default function FloatingPetals() {
+  return (
+    <div
+      className="
+        pointer-events-none
+        fixed
+        inset-0
+        z-10
+        overflow-hidden
+        select-none
+      "
+      aria-hidden="true"
+    >
+      {leaves.map((leaf, index) => {
+        const decoration =
+          decorations[index % decorations.length];
+
+        return (
+          <motion.div
+            key={leaf.id}
+            initial={{
+              y: "-10vh",
+              x: 0,
+              rotate: leaf.rotate,
+              opacity: 0,
+            }}
+            animate={{
+              y: "110vh",
+              x: [0, 20, -15, 25, -10, 0],
+              rotate: leaf.rotate + 360,
+              opacity: [0, 0.8, 0.8, 0],
+            }}
+            transition={{
+              duration: leaf.duration,
+              repeat: Infinity,
+              ease: "linear",
+              delay: leaf.delay,
+            }}
+            style={{
+              position: "absolute",
+              left: `${leaf.left}%`,
+              width: leaf.size,
+              height: leaf.size,
+            }}
+          >
+            <Image
+              src={decoration}
+              alt=""
+              width={leaf.size}
+              height={leaf.size}
+              draggable={false}
+              className="h-full w-full opacity-70 drop-shadow-xl"
+            />
+          </motion.div>
+        );
+      })}
     </div>
   );
 }

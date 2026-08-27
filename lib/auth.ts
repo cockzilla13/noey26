@@ -1,25 +1,40 @@
 import { supabase } from "@/lib/supabase";
 
-export async function getUserRole() {
+export async function getUserRole(): Promise<string | null> {
 
   const {
-    data: { session },
-  } = await supabase.auth.getSession();
+    data: { user },
+    error: userError,
+  } = await supabase.auth.getUser();
 
-  if (!session) {
+  console.log("USER AUTH :", user);
+  console.log("USER ERROR :", userError);
+
+  if (userError || !user) {
     return null;
   }
 
-  const email =
-    session.user.email;
+  if (!user.email) {
+    return null;
+  }
 
-  const { data } =
-    await supabase
-      .from("admin_users")
-      .select("role")
-      .eq("email", email)
-      .single();
+  const {
+    data,
+    error,
+  } = await supabase
+    .from("admin_users")
+    .select("role")
+    .eq("email", user.email)
+    .maybeSingle();
 
-  return data?.role || null;
+  console.log("ADMIN DATA :", data);
+  console.log("ADMIN ERROR :", error);
 
+  if (error) {
+    return null;
+  }
+
+  console.log("ROLE FINAL :", data?.role);
+
+  return data?.role ?? null;
 }

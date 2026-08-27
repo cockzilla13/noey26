@@ -59,7 +59,7 @@ export default function Gallery() {
     </section>
   );
 }*/
-
+/*
 "use client";
 
 import Image from "next/image";
@@ -178,11 +178,11 @@ export default function Gallery() {
 		 </div>
 		 
         </div>
-	     {/* ========================= */}
+	     {/* ========================= *}
 
-{/* VIDEO DE KRIBI */}
+{/* VIDEO DE KRIBI *}
 
-{/* ========================= */}
+{/* ========================= *}
 
 <video
 
@@ -227,4 +227,318 @@ type="video/mp4"
 
   );
 
+}*/
+"use client";
+
+import Image from "next/image";
+import { motion } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
+import Lightbox from "./Lightbox";
+
+const images = [
+  "/images/photo1.jpg",
+  "/images/photo2.jpg",
+  "/images/photo3.jpg",
+  "/images/photo4.jpg",
+  "/images/photo5.webp",
+  "/images/photo6.webp",
+  "/images/photo7.webp",
+  "/images/photo8.webp",
+  "/images/photo9.jpg",
+  "/images/photo10.webp",
+  "/images/photo11.jpg",
+  "/images/photo12.jpg",
+];
+
+const videos = [
+  "/videos/kribi1.mp4",
+  "/videos/kribi2.mp4",
+];
+
+function LazyVideo({ src }: { src: string }) {
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const video = videoRef.current;
+
+    if (!video) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setVisible(true);
+          observer.disconnect();
+        }
+      },
+      {
+        rootMargin: "300px",
+      }
+    );
+
+    observer.observe(video);
+
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <video
+      ref={videoRef}
+      autoPlay={visible}
+      muted
+      loop
+      playsInline
+      preload="none"
+      className="
+        block
+        aspect-video
+        h-auto
+        w-full
+        object-cover
+      "
+    >
+      {visible && (
+        <source
+          src={src}
+          type="video/mp4"
+        />
+      )}
+
+      Votre navigateur ne prend pas en charge la lecture vidéo.
+    </video>
+  );
+}
+
+export default function Gallery() {
+  const [selected, setSelected] = useState<number | null>(null);
+
+  return (
+    <section
+      id="gallery"
+      className="
+        w-full
+        overflow-hidden
+        bg-[#F8F6F2]
+        px-4
+        py-20
+
+        sm:px-6
+        sm:py-24
+
+        lg:py-28
+      "
+    >
+      <div className="mx-auto w-full max-w-7xl">
+
+        {/* =========================================
+            TITRE
+        ========================================= */}
+
+        <motion.div
+          initial={{
+            opacity: 0,
+            y: 30,
+          }}
+          whileInView={{
+            opacity: 1,
+            y: 0,
+          }}
+          transition={{
+            duration: 0.7,
+          }}
+          viewport={{
+            once: true,
+            amount: 0.2,
+          }}
+          className="mx-auto max-w-2xl text-center"
+        >
+          <h2
+            className="
+              font-serif
+              text-4xl
+              leading-tight
+              text-[#556B5D]
+
+              sm:text-5xl
+
+              lg:text-6xl
+            "
+          >
+            Notre Galerie
+          </h2>
+
+          <p
+            className="
+              mt-4
+              text-sm
+              leading-6
+              text-gray-500
+
+              sm:mt-5
+              sm:text-base
+            "
+          >
+            Quelques instants de notre histoire.
+          </p>
+        </motion.div>
+
+        {/* =========================================
+            GALERIE PHOTOS
+        ========================================= */}
+
+        <div
+          className="
+            mt-12
+            columns-1
+            gap-4
+
+            sm:columns-2
+            sm:gap-5
+
+            lg:mt-16
+            lg:columns-3
+          "
+        >
+          {images.map((image, index) => (
+            <motion.div
+              key={image}
+              initial={{
+                opacity: 0,
+                y: 30,
+              }}
+              whileInView={{
+                opacity: 1,
+                y: 0,
+              }}
+              transition={{
+                duration: 0.6,
+                delay: Math.min(index * 0.05, 0.4),
+              }}
+              viewport={{
+                once: true,
+                amount: 0.1,
+              }}
+              whileHover={{
+                scale: 1.02,
+              }}
+              className="
+                mb-4
+                break-inside-avoid
+                cursor-pointer
+
+                sm:mb-5
+              "
+              onClick={() => setSelected(index)}
+            >
+              <div
+                className="
+                  group
+                  relative
+                  overflow-hidden
+                  rounded-2xl
+                  bg-white
+                  shadow-lg
+
+                  sm:rounded-3xl
+                "
+              >
+                <Image
+                  src={image}
+                  alt={`Photo ${index + 1} de notre mariage`}
+                  width={800}
+                  height={1000}
+                  sizes="
+                    (max-width: 639px) 100vw,
+                    (max-width: 1023px) 50vw,
+                    33vw
+                  "
+                  className="
+                    h-auto
+                    w-full
+                    object-cover
+                    transition-transform
+                    duration-700
+                    group-hover:scale-110
+                  "
+                />
+
+                <div
+                  className="
+                    absolute
+                    inset-0
+                    bg-black/0
+                    transition-colors
+                    duration-500
+                    group-hover:bg-black/10
+                  "
+                />
+              </div>
+            </motion.div>
+          ))}
+        </div>
+
+        {/* =========================================
+            VIDÉOS
+        ========================================= */}
+
+        <motion.div
+          initial={{
+            opacity: 0,
+            y: 40,
+          }}
+          whileInView={{
+            opacity: 1,
+            y: 0,
+          }}
+          transition={{
+            duration: 0.8,
+          }}
+          viewport={{
+            once: true,
+            amount: 0.15,
+          }}
+          className="
+            mt-16
+            grid
+            grid-cols-1
+            gap-6
+
+            sm:mt-20
+            sm:gap-8
+
+            lg:mt-24
+            lg:grid-cols-2
+          "
+        >
+          {videos.map((video, index) => (
+            <div
+              key={video}
+              className="
+                overflow-hidden
+                rounded-2xl
+                bg-black
+                shadow-2xl
+
+                sm:rounded-3xl
+              "
+            >
+              <LazyVideo src={video} />
+            </div>
+          ))}
+        </motion.div>
+      </div>
+
+      {/* =========================================
+          LIGHTBOX
+      ========================================= */}
+
+      {selected !== null && (
+        <Lightbox
+          images={images}
+          current={selected}
+          onClose={() => setSelected(null)}
+        />
+      )}
+    </section>
+  );
 }

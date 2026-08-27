@@ -1,544 +1,3 @@
-/*"use client";
-
-import { motion } from "framer-motion";
-import {
-  Building2,
-  Wine,
-  UtensilsCrossed,
-  Music4,
-  MapPin,
-  Clock
-} from "lucide-react";
-
-export default function Program() {
-  return (
-    <section
-      id="programme"
-      className="bg-[#F8F6F2] py-28 px-6"
-    >
-      <div className=" mx-auto  flex h-full flex-col items-center justify-center text-center px-6">
-
-        <motion.h2
-          initial={{opacity:0,y:40}}
-          whileInView={{opacity:1,y:0}}
-          transition={{duration:.8}}
-          className="text-center text-5xl font-serif text-[#556B5D]"
-        >
-          Le Grand Jour
-        </motion.h2>
-
-        <p className="text-center mt-5 text-gray-600">
-          Nous serions honorés de partager cette journée avec vous.
-        </p>
-
-        <div className="grid md:grid-cols-2 gap-10 mt-20">
-
-          <Card
-            icon={<Building2 size={42}/>}
-            title="Cérémonie"
-            hour="15 h 00"
-            text="Échange de nos vœux et célébration de notre union."
-          />
-
-          <Card
-            icon={<Wine size={42}/>}
-            title="Cocktail"
-            hour="17 h 00"
-            text="Moment convivial avec les invités."
-          />
-
-          <Card
-            icon={<UtensilsCrossed size={42}/>}
-            title="Réception"
-            hour="19 h 00"
-            text="Dîner et festivités."
-          />
-
-          <Card
-            icon={<Music4 size={42}/>}
-            title="Soirée dansante"
-            hour="20 h 30"
-            text="Place à la fête jusqu'au bout de la nuit."
-          />
-
-        </div>
-			 <div className="mt-24">
-
-			<h2 className="text-center text-4xl font-serif text-[#556B5D]">
-
-			Lieu de la cérémonie
-
-			</h2>
-
-			<p className="text-center mt-4">
-
-			📍 Mpolongwe • Kribi
-
-			</p>
-
-					
-		</div>
-      </div><div className="rounded-3xl overflow-hidden shadow-xl mt-10">
-
-					<iframe
-
-					src="https://www.google.com/maps?q=Mpolongwe+Kribi&output=embed"
-
-					width="100%"
-
-					height="500"
-
-					loading="lazy"
-
-					style={{border:0}}
-
-					></iframe>
-			   
-						   <a
-
-					href="https://www.google.com/maps/search/Mpolongwe+-+Kribi"
-
-					target="_blank"
-
-					className="inline-block mt-10 bg-[#556B5D] text-white px-8 py-4 rounded-full"
-
-					>
-
-					Ouvrir dans Google Maps
-
-					</a>
-				  </div>
-
-    </section>
-  );
-}
-
-function Card({
-  icon,
-  title,
-  hour,
-  text
-}:any){
-
-return(
-
-<div className="bg-white rounded-3xl p-10 shadow-xl hover:shadow-2xl transition-all">
-
-<div className="text-[#C8A96A]">
-
-{icon}
-
-</div>
-
-<h3 className="text-3xl mt-6 text-[#556B5D]">
-
-{title}
-
-</h3>
-
-<div className="flex items-center mt-4 gap-2">
-
-<Clock size={20}/>
-
-{hour}
-
-</div>
-
-<p className="mt-5 text-gray-600">
-
-{text}
-
-</p>
-
-</div>
-
-)
-
-}*"use client";
-
-import { motion } from "framer-motion";
-import {
-  Church,
-  GlassWater,
-  UtensilsCrossed,
-  Music4,
-  PartyPopper,
-  MapPin,
-  Shirt,
-  CalendarDays,
-  Navigation,
-} from "lucide-react";
-
-const events = [
-  {
-    time: "15:00",
-    title: "Cérémonie Religieuse",
-    description:
-      "Nous échangerons nos vœux devant Dieu entourés de nos familles et de nos proches.",
-    icon: Church,
-  },
-  {
-    time: "17:30",
-    title: "Cocktail",
-    description:
-      "Un moment convivial pour partager un verre et immortaliser cette journée.",
-    icon: GlassWater,
-  },
-  {
-    time: "19:00",
-    title: "Réception",
-    description:
-      "Dîner de mariage, discours et nombreuses surprises vous attendent.",
-    icon: UtensilsCrossed,
-  },
-  {
-    time: "21:30",
-    title: "Première danse",
-    description:
-      "L'ouverture officielle du bal des mariés.",
-    icon: Music4,
-  },
-  {
-    time: "22:00",
-    title: "Soirée Dansante",
-    description:
-      "Place à la fête jusqu'au bout de la nuit !",
-    icon: PartyPopper,
-  },
-];
-
-export default function Program() {
-  return (
-    <section
-      id="program"
-      className="relative overflow-hidden  bg-[#F8F6F2] py-28"
-    >
-	
-	  <div className="relative z-20 flex h-full flex-col items-center justify-center text-center px-6">
-      {/* Décor *}
-      <div className="absolute -top-40 -left-40 w-96 h-96 rounded-full bg-[#DDE8D8] blur-3xl opacity-40" />
-      <div className="absolute -bottom-40 -right-40 w-96 h-96 rounded-full bg-[#E9D8B6] blur-3xl opacity-40" />
-
-      <div className="max-w-7xl mx-auto px-6">
-
-        <motion.h2
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: .7 }}
-          className="text-center text-5xl md:text-6xl font-serif text-[#556B5D]"
-        >
-          Programme
-        </motion.h2>
-
-        <motion.p
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ delay: .2 }}
-          viewport={{ once: true }}
-          className="mt-6 max-w-3xl mx-auto text-center text-gray-600 leading-8"
-        >
-          Chaque instant de cette journée a été imaginé avec amour.
-          Nous serions honorés de partager ces précieux moments avec vous.
-        </motion.p>
-
-        {/* Timeline *}
-
-        <div className="relative mt-24">
-
-          {/* Ligne centrale *}
-
-          <div className="hidden md:block absolute left-1/2 top-0 bottom-0 w-[3px] bg-gradient-to-b from-[#D6C09B] via-[#A8B5A2] to-[#D6C09B] -translate-x-1/2 rounded-full" />
-		  
-		  {events.map((event, index) => {
-            const Icon = event.icon;
-            const left = index % 2 === 0;
-
-            return (
-              <motion.div
-                key={event.title}
-                initial={{
-                  opacity: 0,
-                  x: left ? -80 : 80,
-                }}
-                whileInView={{
-                  opacity: 1,
-                  x: 0,
-                }}
-                viewport={{ once: true }}
-                transition={{
-                  duration: 0.7,
-                  delay: index * 0.15,
-                }}
-                className={`relative mb-20 flex ${
-                  left ? "justify-start" : "justify-end"
-                }`}
-              >
-                {/* Point central *}
-
-                <div
-                  className="
-                    hidden md:flex
-                    absolute
-                    left-1/2
-                    top-1/2
-                    -translate-x-1/2
-                    -translate-y-1/2
-                    w-8
-                    h-8
-                    rounded-full
-                    bg-[#C8A96A]
-                    border-4
-                    border-[#F8F6F2]
-                    shadow-xl
-                    items-center
-                    justify-center
-                    z-20
-                  "
-                >
-                  <div className="w-2 h-2 rounded-full bg-white" />
-                </div>
-
-                {/* Carte *}
-
-                <motion.div
-                  whileHover={{
-                    y: -6,
-                    scale: 1.02,
-                  }}
-                  className="
-                    w-full
-                    md:w-[45%]
-                    rounded-[32px]
-                    bg-white/25
-                    backdrop-blur-2xl
-                    border
-                    border-white/30
-                    shadow-2xl
-                    overflow-hidden
-                  "
-                >
-                  {/* En-tête *}
-
-                  <div className="bg-gradient-to-r from-[#556B5D] to-[#8EA78A] p-6 text-white">
-
-                    <div className="flex items-center gap-4">
-
-                      <div
-                        className="
-                          w-16
-                          h-16
-                          rounded-full
-                          bg-white/20
-                          backdrop-blur-xl
-                          flex
-                          items-center
-                          justify-center
-                        "
-                      >
-                        <Icon size={30} />
-                      </div>
-
-                      <div>
-
-                        <p className="uppercase tracking-[4px] text-sm opacity-80">
-                          {event.time}
-                        </p>
-
-                        <h3 className="font-serif text-3xl">
-                          {event.title}
-                        </h3>
-
-                      </div>
-
-                    </div>
-
-                  </div>
-
-                  {/* Corps *}
-
-                  <div className="p-8">
-
-                    <p className="leading-8 text-gray-600">
-                      {event.description}
-                    </p>
-
-                  </div>
-
-                </motion.div>
-
-              </motion.div>
-            );
-          })}
-		  
-		  
-		  </div>
-
-        {/* ================= Dress Code ================= *}
-
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7 }}
-          className="mt-24"
-        >
-          <div className="rounded-[36px] bg-white/25 backdrop-blur-2xl border border-white/30 shadow-2xl p-10">
-
-            <div className="flex items-center gap-4 mb-8">
-
-              <div className="w-16 h-16 rounded-full bg-[#556B5D] flex items-center justify-center text-white">
-
-                <Shirt size={28} />
-
-              </div>
-
-              <div>
-
-                <h3 className="text-3xl font-serif text-[#556B5D]">
-
-                  Dress Code
-
-                </h3>
-
-                <p className="text-gray-500">
-
-                  Élégance • Nature • Raffinement
-
-                </p>
-
-              </div>
-
-            </div>
-
-            <div className="grid md:grid-cols-3 gap-8">
-
-              <div className="rounded-3xl bg-[#F8F5EF] p-8 shadow-lg">
-
-                <div className="w-16 h-16 rounded-full bg-[#F8F5EF] border mx-auto mb-5" />
-
-                <h4 className="text-center text-xl font-semibold text-[#556B5D]">
-
-                  Blanc cassé
-
-                </h4>
-
-              </div>
-
-              <div className="rounded-3xl bg-[#A5B49C] p-8 shadow-lg text-white">
-
-                <div className="w-16 h-16 rounded-full bg-[#A5B49C] border border-white mx-auto mb-5" />
-
-                <h4 className="text-center text-xl font-semibold">
-
-                  Vert Sauge
-
-                </h4>
-
-              </div>
-
-              <div className="rounded-3xl bg-[#D8C29A] p-8 shadow-lg">
-
-                <div className="w-16 h-16 rounded-full bg-[#D8C29A] border border-white mx-auto mb-5" />
-
-                <h4 className="text-center text-xl font-semibold text-[#556B5D]">
-
-                  Champagne
-
-                </h4>
-
-              </div>
-
-            </div>
-
-          </div>
-
-        </motion.div>
-
-        {/* ================= Lieu ================= *}
-
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7 }}
-          className="mt-20"
-        >
-
-          <div className="rounded-[36px] bg-white/25 backdrop-blur-2xl border border-white/30 shadow-2xl p-10">
-
-            <div className="flex items-center gap-5">
-
-              <div className="w-16 h-16 rounded-full bg-[#C8A96A] flex items-center justify-center text-white">
-
-                <MapPin size={28} />
-
-              </div>
-
-              <div>
-
-                <h3 className="text-3xl font-serif text-[#556B5D]">
-
-                  Mpolongwe – Kribi
-
-                </h3>
-
-                <p className="text-gray-600 mt-2">
-
-                  Cérémonie : 15h00
-                  <br />
-                  Réception : 19h00
-
-                </p>
-
-              </div>
-
-            </div>
-
-            <div className="flex flex-wrap gap-5 mt-10">
-
-              <a
-                href="https://www.google.com/maps/search/Mpolongwe+-+Kribi"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-3 rounded-full bg-[#556B5D] px-8 py-4 text-white shadow-xl transition hover:scale-105"
-              >
-                <Navigation size={20} />
-                Itinéraire Google Maps
-              </a>
-
-              <a
-                href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Mariage+Donald+Kevin+%26+Marie"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-3 rounded-full border border-[#556B5D] px-8 py-4 text-[#556B5D] transition hover:bg-[#556B5D] hover:text-white"
-              >
-                <CalendarDays size={20} />
-                Google Calendar
-              </a>
-
-              <a
-                href="/calendar/mariage.ics"
-                className="inline-flex items-center gap-3 rounded-full border border-[#C8A96A] px-8 py-4 text-[#C8A96A] transition hover:bg-[#C8A96A] hover:text-white"
-              >
-                Télécharger le fichier .ics
-              </a>
-
-            </div>
-
-          </div>
-
-        </motion.div>
-
-      </div>
-</div>
-    </section>
-
-  );
-
-}*/
-
-
 "use client";
 
 import { motion } from "framer-motion";
@@ -554,11 +13,16 @@ import {
   Navigation,
   Sparkles,
 } from "lucide-react";
-
+  /*
+   * Lieu du mariage
+   */
+  const mapsQuery = encodeURIComponent(
+	 `"3°02'15.7"N 9°57'49.5"E"`
+  );
 const events = [
   {
     time: "15:00",
-    title: "Cérémonie ",
+    title: "Cérémonie",
     description:
       "Nous échangerons nos vœux entourés de nos familles et de nos proches.",
     icon: Building2,
@@ -586,7 +50,7 @@ const events = [
   },
   {
     time: "22:00",
-    title: "Soirée Dansante",
+    title: "Soirée dansante",
     description:
       "Place à la fête jusqu'au bout de la nuit !",
     icon: PartyPopper,
@@ -595,308 +59,831 @@ const events = [
 
 export default function Program() {
   return (
-  
     <section
       id="programme"
-     // className="relative  flex h-full flex-col items-center justify-center text-center bg-[#F8F6F2] py-28"
-	  className="relative  flex h-full flex-col items-center justify-center text-center bg-[#F8F6F2] py-32"
+      className="
+        relative
+        w-full
+        overflow-hidden
+        bg-[#F8F6F2]
+        px-4
+        py-20
+
+        sm:px-6
+        sm:py-24
+
+        lg:px-8
+        lg:py-32
+      "
     >
-	
-	<div className="ligt"/>
-      {/* Décor */}
-      <div className="absolute -top-40 -left-40 w-96 h-96 rounded-full bg-[#DDE8D8] blur-3xl opacity-40" />
-      <div className="absolute -bottom-40 -right-40 w-96 h-96 rounded-full bg-[#E9D8B6] blur-3xl opacity-40" />
+      {/* =========================================
+          DÉCOR
+      ========================================= */}
 
-      <div className="max-w-7xl mx-auto px-6">
+      <div
+        className="
+          pointer-events-none
+          absolute
+          -left-32
+          -top-32
+          h-72
+          w-72
+          rounded-full
+          bg-[#DDE8D8]
+          opacity-40
+          blur-3xl
 
-        <motion.h2
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: .7 }}
-          className="text-center text-5xl md:text-6xl font-serif text-[#556B5D]"
-        >
-          Programme
-        </motion.h2>
+          sm:h-96
+          sm:w-96
+        "
+      />
 
-        <motion.p
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ delay: .2 }}
-          viewport={{ once: true }}
-          className="mt-6 max-w-3xl mx-auto text-center text-gray-600 leading-8"
-        >
-          Chaque instant de cette journée a été imaginé avec amour.
-          Nous serions honorés de partager ces précieux moments avec vous.
-        </motion.p>
-      <div className="absolute inset-0 opacity-10 pointer-events-none">
-        <Sparkles className="absolute top-9 left-116 w-12 h-12 text-sfelted-500 animate-pulse" />
-		 <Sparkles className="absolute top-9 left-350 w-12 h-12 text-sfelted-500 animate-pulse" />
-        <Sparkles className="absolute bottom-20 right-116 w-10 h-10 text-yellow-400 animate-pulse" />
-        <Sparkles className="absolute bottom-20 left-116 w-10 h-10 text-yellow-400 animate-pulse" />
+      <div
+        className="
+          pointer-events-none
+          absolute
+          -bottom-32
+          -right-32
+          h-72
+          w-72
+          rounded-full
+          bg-[#E9D8B6]
+          opacity-40
+          blur-3xl
+
+          sm:h-96
+          sm:w-96
+        "
+      />
+
+      {/* =========================================
+          PETITES ÉTOILES DÉCORATIVES
+      ========================================= */}
+
+      <div className="pointer-events-none absolute inset-0 hidden opacity-10 sm:block">
+        <Sparkles
+          className="
+            absolute
+            left-[8%]
+            top-[8%]
+            h-8
+            w-8
+            animate-pulse
+            text-[#C8A96A]
+
+            lg:h-12
+            lg:w-12
+          "
+        />
+
+        <Sparkles
+          className="
+            absolute
+            right-[8%]
+            top-[18%]
+            h-7
+            w-7
+            animate-pulse
+            text-[#C8A96A]
+
+            lg:h-10
+            lg:w-10
+          "
+        />
+
+        <Sparkles
+          className="
+            absolute
+            bottom-[15%]
+            left-[10%]
+            h-7
+            w-7
+            animate-pulse
+            text-[#C8A96A]
+          "
+        />
+
+        <Sparkles
+          className="
+            absolute
+            bottom-[8%]
+            right-[10%]
+            h-8
+            w-8
+            animate-pulse
+            text-[#C8A96A]
+          "
+        />
       </div>
-        {/* Timeline */}
 
-        <div className="relative mt-24">
+      {/* =========================================
+          CONTENU
+      ========================================= */}
 
-          {/* Ligne centrale */}
+      <div className="relative z-10 mx-auto w-full max-w-7xl">
+        {/* =========================================
+            TITRE
+        ========================================= */}
 
-          <div className="hidden md:block absolute left-1/2 top-0 bottom-0 w-[3px] bg-gradient-to-b from-[#D6C09B] via-[#A8B5A2] to-[#D6C09B] -translate-x-1/2 rounded-full" />
-		  
-		  
-		  {events.map((event, index) => {
+        <motion.div
+          initial={{
+            opacity: 0,
+            y: 30,
+          }}
+          whileInView={{
+            opacity: 1,
+            y: 0,
+          }}
+          viewport={{
+            once: true,
+            amount: 0.2,
+          }}
+          transition={{
+            duration: 0.7,
+          }}
+          className="mx-auto max-w-3xl text-center"
+        >
+          <h2
+            className="
+              font-serif
+              text-4xl
+              leading-tight
+              text-[#556B5D]
+
+              sm:text-5xl
+
+              lg:text-6xl
+            "
+          >
+            Programme
+          </h2>
+
+          <p
+            className="
+              mx-auto
+              mt-4
+              max-w-2xl
+              text-sm
+              leading-6
+              text-gray-600
+
+              sm:mt-6
+              sm:text-base
+              sm:leading-7
+
+              lg:text-lg
+              lg:leading-8
+            "
+          >
+            Chaque instant de cette journée a été imaginé avec amour.
+            Nous serions honorés de partager ces précieux moments avec vous.
+          </p>
+        </motion.div>
+
+        {/* =========================================
+            TIMELINE
+        ========================================= */}
+
+        <div className="relative mt-14 sm:mt-20 lg:mt-24">
+
+          {/* Ligne mobile */}
+
+          <div
+            className="
+              absolute
+              bottom-0
+              left-4
+              top-0
+              w-[2px]
+              rounded-full
+              bg-gradient-to-b
+              from-[#D6C09B]
+              via-[#A8B5A2]
+              to-[#D6C09B]
+
+              sm:left-5
+
+              md:hidden
+            "
+          />
+
+          {/* Ligne desktop */}
+
+          <div
+            className="
+              absolute
+              bottom-0
+              left-1/2
+              top-0
+              hidden
+              w-[3px]
+              -translate-x-1/2
+              rounded-full
+              bg-gradient-to-b
+              from-[#D6C09B]
+              via-[#A8B5A2]
+              to-[#D6C09B]
+
+              md:block
+            "
+          />
+
+          {events.map((event, index) => {
             const Icon = event.icon;
             const left = index % 2 === 0;
 
             return (
               <motion.div
-                key={event.title}
+                key={`${event.time}-${event.title}`}
                 initial={{
                   opacity: 0,
-                  x: left ? -80 : 80,
+                  y: 30,
                 }}
                 whileInView={{
                   opacity: 1,
-                  x: 0,
+                  y: 0,
                 }}
-                viewport={{ once: true }}
+                viewport={{
+                  once: true,
+                  amount: 0.15,
+                }}
                 transition={{
-                  duration: 0.7,
-                  delay: index * 0.15,
+                  duration: 0.6,
+                  delay: index * 0.1,
                 }}
-                className={`relative mb-20 flex ${
-                  left ? "justify-start" : "justify-end"
-                }`}
+                className={`
+                  relative
+                  mb-8
+                  flex
+                  w-full
+                  pl-10
+
+                  sm:mb-10
+                  sm:pl-12
+
+                  md:mb-16
+                  md:pl-0
+                  ${
+                    left
+                      ? "md:justify-start"
+                      : "md:justify-end"
+                  }
+                `}
               >
-                {/* Point central */}
+                {/* Point mobile */}
 
                 <div
                   className="
-                    hidden md:flex
+                    absolute
+                    left-4
+                    top-7
+                    z-20
+                    flex
+                    h-4
+                    w-4
+                    -translate-x-1/2
+                    items-center
+                    justify-center
+                    rounded-full
+                    border-2
+                    border-[#F8F6F2]
+                    bg-[#C8A96A]
+                    shadow-md
+
+                    sm:left-5
+                  "
+                >
+                  <div className="h-1.5 w-1.5 rounded-full bg-white" />
+                </div>
+
+                {/* Point desktop */}
+
+                <div
+                  className="
                     absolute
                     left-1/2
                     top-1/2
+                    z-20
+                    hidden
+                    h-8
+                    w-8
                     -translate-x-1/2
                     -translate-y-1/2
-                    w-8
-                    h-8
-                    rounded-full
-                    bg-[#C8A96A]
-                    border-4
-                    border-[#F8F6F2]
-                    shadow-xl
                     items-center
                     justify-center
-                    z-20
+                    rounded-full
+                    border-4
+                    border-[#F8F6F2]
+                    bg-[#C8A96A]
+                    shadow-xl
+
+                    md:flex
                   "
                 >
-                  <div className="w-2 h-2 rounded-full bg-white" />
+                  <div className="h-2 w-2 rounded-full bg-white" />
                 </div>
 
                 {/* Carte */}
 
                 <motion.div
                   whileHover={{
-                    y: -6,
-                    scale: 1.02,
+                    y: -5,
+                    scale: 1.01,
                   }}
                   className="
                     w-full
-                    md:w-[45%]
-                    rounded-[32px]
-                    bg-white/25
-                    backdrop-blur-2xl
-                    border
-                    border-white/30
-                    shadow-2xl
                     overflow-hidden
+                    rounded-2xl
+                    border
+                    border-white/40
+                    bg-white/40
+                    shadow-xl
+                    backdrop-blur-2xl
+
+                    sm:rounded-3xl
+
+                    md:w-[44%]
+                    lg:w-[45%]
                   "
                 >
                   {/* En-tête */}
 
-                  <div className="bg-gradient-to-r from-[#556B5D] to-[#8EA78A] p-6 text-white">
+                  <div
+                    className="
+                      bg-gradient-to-r
+                      from-[#556B5D]
+                      to-[#8EA78A]
+                      p-5
+                      text-white
 
+                      sm:p-6
+                    "
+                  >
                     <div className="flex items-center gap-4">
-
                       <div
                         className="
-                          w-16
-                          h-16
+                          flex
+                          h-12
+                          w-12
+                          shrink-0
+                          items-center
+                          justify-center
                           rounded-full
                           bg-white/20
                           backdrop-blur-xl
-                          flex
-                          items-center
-                          justify-center
+
+                          sm:h-14
+                          sm:w-14
+
+                          lg:h-16
+                          lg:w-16
                         "
                       >
-                        <Icon size={30} />
+                        <Icon
+                          size={24}
+                          className="sm:h-7 sm:w-7"
+                        />
                       </div>
 
-                      <div>
+                      <div className="min-w-0">
+                        <p
+                          className="
+                            text-xs
+                            uppercase
+                            tracking-[0.25em]
+                            opacity-80
 
-                        <p className="uppercase tracking-[4px] text-sm opacity-80">
+                            sm:text-sm
+                            sm:tracking-[0.3em]
+                          "
+                        >
                           {event.time}
                         </p>
 
-                        <h3 className="font-serif text-3xl">
+                        <h3
+                          className="
+                            mt-1
+                            font-serif
+                            text-xl
+
+                            sm:text-2xl
+
+                            lg:text-3xl
+                          "
+                        >
                           {event.title}
                         </h3>
-
                       </div>
-
                     </div>
-
                   </div>
 
                   {/* Corps */}
 
-                  <div className="p-8">
+                  <div
+                    className="
+                      p-5
 
-                    <p className="leading-8 text-gray-600">
+                      sm:p-6
+
+                      lg:p-8
+                    "
+                  >
+                    <p
+                      className="
+                        text-sm
+                        leading-6
+                        text-gray-600
+
+                        sm:text-base
+                        sm:leading-7
+
+                        lg:leading-8
+                      "
+                    >
                       {event.description}
                     </p>
-
                   </div>
-
                 </motion.div>
-
               </motion.div>
             );
           })}
-		  </div>
+        </div>
 
-
-        {/* ================= Dress Code ================= */}
+        {/* =========================================
+            DRESS CODE
+        ========================================= */}
 
         <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7 }}
-          className="mt-24"
+          initial={{
+            opacity: 0,
+            y: 40,
+          }}
+          whileInView={{
+            opacity: 1,
+            y: 0,
+          }}
+          viewport={{
+            once: true,
+            amount: 0.15,
+          }}
+          transition={{
+            duration: 0.7,
+          }}
+          className="mt-16 sm:mt-20 lg:mt-24"
         >
-          <div className="rounded-[36px] bg-white/25 backdrop-blur-2xl border border-white/30 shadow-2xl p-10">
+          <div
+            className="
+              rounded-2xl
+              border
+              border-white/40
+              bg-white/40
+              p-5
+              shadow-xl
+              backdrop-blur-2xl
 
-            <div className="flex items-center gap-4 mb-8">
+              sm:rounded-3xl
+              sm:p-8
 
-              <div className="w-16 h-16 rounded-full bg-[#556B5D] flex items-center justify-center text-white">
+              lg:rounded-[36px]
+              lg:p-10
+            "
+          >
+            {/* Header */}
 
-                <Shirt size={28} />
+            <div
+              className="
+                flex
+                flex-col
+                items-center
+                text-center
 
+                sm:flex-row
+                sm:items-center
+                sm:text-left
+              "
+            >
+              <div
+                className="
+                  flex
+                  h-14
+                  w-14
+                  shrink-0
+                  items-center
+                  justify-center
+                  rounded-full
+                  bg-[#556B5D]
+                  text-white
+
+                  sm:h-16
+                  sm:w-16
+                "
+              >
+                <Shirt size={26} />
               </div>
 
-              <div>
+              <div className="mt-4 sm:ml-4 sm:mt-0">
+                <h3
+                  className="
+                    font-serif
+                    text-2xl
+                    text-[#556B5D]
 
-                <h3 className="text-3xl font-serif text-[#556B5D]">
-
+                    sm:text-3xl
+                  "
+                >
                   Dress Code
-
                 </h3>
 
-                <p className="text-gray-500">
-
+                <p className="mt-1 text-sm text-gray-500 sm:text-base">
                   Élégance • Nature • Raffinement
-
                 </p>
-
               </div>
-
             </div>
 
-            <div className="grid md:grid-cols-3 gap-8">
+            {/* Couleurs */}
 
-              <div className="rounded-3xl bg-[#F8F5EF] p-8 shadow-lg">
+            <div
+              className="
+                mt-8
+                grid
+                grid-cols-1
+                gap-4
 
-                <div className="w-16 h-16 rounded-full bg-[#F8F5EF] border mx-auto mb-5" />
+                sm:grid-cols-3
+                sm:gap-5
 
-                <h4 className="text-center text-xl font-semibold text-[#556B5D]">
+                lg:gap-8
+              "
+            >
+              {/* Blanc cassé */}
 
+              <div
+                className="
+                  rounded-2xl
+                  bg-[#F8F5EF]
+                  p-6
+                  shadow-lg
+
+                  sm:rounded-3xl
+                  sm:p-8
+                "
+              >
+                <div
+                  className="
+                    mx-auto
+                    mb-4
+                    h-14
+                    w-14
+                    rounded-full
+                    border
+                    border-gray-200
+                    bg-[#F8F5EF]
+
+                    sm:h-16
+                    sm:w-16
+                  "
+                />
+
+                <h4
+                  className="
+                    text-center
+                    text-lg
+                    font-semibold
+                    text-[#556B5D]
+
+                    sm:text-xl
+                  "
+                >
                   Blanc cassé
-
                 </h4>
-
               </div>
 
-              <div className="rounded-3xl bg-[#A5B49C] p-8 shadow-lg text-white">
+              {/* Vert sauge */}
 
-                <div className="w-16 h-16 rounded-full bg-[#A5B49C] border border-white mx-auto mb-5" />
+              <div
+                className="
+                  rounded-2xl
+                  bg-[#A5B49C]
+                  p-6
+                  text-white
+                  shadow-lg
 
-                <h4 className="text-center text-xl font-semibold">
+                  sm:rounded-3xl
+                  sm:p-8
+                "
+              >
+                <div
+                  className="
+                    mx-auto
+                    mb-4
+                    h-14
+                    w-14
+                    rounded-full
+                    border
+                    border-white
+                    bg-[#A5B49C]
 
+                    sm:h-16
+                    sm:w-16
+                  "
+                />
+
+                <h4
+                  className="
+                    text-center
+                    text-lg
+                    font-semibold
+
+                    sm:text-xl
+                  "
+                >
                   Vert Sauge
-
                 </h4>
-
               </div>
 
-              <div className="rounded-3xl bg-[#D8C29A] p-8 shadow-lg">
+              {/* Champagne */}
 
-                <div className="w-16 h-16 rounded-full bg-[#D8C29A] border border-white mx-auto mb-5" />
+              <div
+                className="
+                  rounded-2xl
+                  bg-[#D8C29A]
+                  p-6
+                  shadow-lg
 
-                <h4 className="text-center text-xl font-semibold text-[#556B5D]">
+                  sm:rounded-3xl
+                  sm:p-8
+                "
+              >
+                <div
+                  className="
+                    mx-auto
+                    mb-4
+                    h-14
+                    w-14
+                    rounded-full
+                    border
+                    border-white
+                    bg-[#D8C29A]
 
+                    sm:h-16
+                    sm:w-16
+                  "
+                />
+
+                <h4
+                  className="
+                    text-center
+                    text-lg
+                    font-semibold
+                    text-[#556B5D]
+
+                    sm:text-xl
+                  "
+                >
                   Champagne
-
                 </h4>
-
               </div>
-
             </div>
-
           </div>
-
         </motion.div>
 
-        {/* ================= Lieu ================= */}
+        {/* =========================================
+            LIEU
+        ========================================= */}
 
         <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7 }}
-          className="mt-20"
+          initial={{
+            opacity: 0,
+            y: 40,
+          }}
+          whileInView={{
+            opacity: 1,
+            y: 0,
+          }}
+          viewport={{
+            once: true,
+            amount: 0.15,
+          }}
+          transition={{
+            duration: 0.7,
+          }}
+          className="mt-12 sm:mt-16 lg:mt-20"
         >
+          <div
+            className="
+              rounded-2xl
+              border
+              border-white/40
+              bg-white/40
+              p-5
+              shadow-xl
+              backdrop-blur-2xl
 
-          <div className="rounded-[36px] bg-white/25 backdrop-blur-2xl border border-white/30 shadow-2xl p-10">
+              sm:rounded-3xl
+              sm:p-8
 
-            <div className="flex items-center gap-5">
+              lg:rounded-[36px]
+              lg:p-10
+            "
+          >
+            {/* Informations */}
 
-              <div className="w-16 h-16 rounded-full bg-[#C8A96A] flex items-center justify-center text-white">
+            <div
+              className="
+                flex
+                flex-col
+                items-center
+                text-center
 
-                <MapPin size={28} />
+                sm:flex-row
+                sm:items-center
+                sm:text-left
+              "
+            >
+              <div
+                className="
+                  flex
+                  h-14
+                  w-14
+                  shrink-0
+                  items-center
+                  justify-center
+                  rounded-full
+                  bg-[#C8A96A]
+                  text-white
 
+                  sm:h-16
+                  sm:w-16
+                "
+              >
+                <MapPin size={26} />
               </div>
 
-              <div>
+              <div className="mt-4 sm:ml-5 sm:mt-0">
+                <h3
+                  className="
+                    font-serif
+                    text-2xl
+                    text-[#556B5D]
 
-                <h3 className="text-3xl font-serif text-[#556B5D]">
-
+                    sm:text-3xl
+                  "
+                >
                   Mpolongwe – Kribi
-
                 </h3>
 
-                <p className="text-gray-600 mt-2">
-
+                <p className="mt-2 text-sm leading-6 text-gray-600 sm:text-base">
                   Cérémonie : 15h00
                   <br />
                   Réception : 19h00
-
                 </p>
-
               </div>
-
             </div>
 
-            <div className="flex flex-wrap gap-5 mt-10">
+            {/* Boutons */}
 
+            <div
+              className="
+                mt-8
+                flex
+                flex-col
+                gap-3
+
+                sm:flex-row
+                sm:flex-wrap
+                sm:gap-4
+
+                lg:mt-10
+              "
+            >
               <a
                 href="https://www.google.com/maps/search/Mpolongwe+-+Kribi"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-3 rounded-full bg-[#556B5D] px-8 py-4 text-white shadow-xl transition hover:scale-105"
+                className="
+                  inline-flex
+                  min-h-[52px]
+                  w-full
+                  items-center
+                  justify-center
+                  gap-3
+                  rounded-full
+                  bg-[#556B5D]
+                  px-6
+                  py-3
+                  text-sm
+                  text-white
+                  shadow-xl
+                  transition
+                  hover:scale-[1.02]
+
+                  sm:w-auto
+                  sm:px-7
+                  sm:text-base
+                "
               >
-                <Navigation size={20} />
+			  
+                <Navigation size={19} />
                 Itinéraire Google Maps
               </a>
 
@@ -904,29 +891,63 @@ export default function Program() {
                 href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Mariage+Donald+Kevin+%26+Marie"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-3 rounded-full border border-[#556B5D] px-8 py-4 text-[#556B5D] transition hover:bg-[#556B5D] hover:text-white"
+                className="
+                  inline-flex
+                  min-h-[52px]
+                  w-full
+                  items-center
+                  justify-center
+                  gap-3
+                  rounded-full
+                  border
+                  border-[#556B5D]
+                  px-6
+                  py-3
+                  text-sm
+                  text-[#556B5D]
+                  transition
+                  hover:bg-[#556B5D]
+                  hover:text-white
+
+                  sm:w-auto
+                  sm:px-7
+                  sm:text-base
+                "
               >
-                <CalendarDays size={20} />
+                <CalendarDays size={19} />
                 Google Calendar
               </a>
 
               <a
                 href="/calendar/mariage.ics"
-                className="inline-flex items-center gap-3 rounded-full border border-[#C8A96A] px-8 py-4 text-[#C8A96A] transition hover:bg-[#C8A96A] hover:text-white"
+                className="
+                  inline-flex
+                  min-h-[52px]
+                  w-full
+                  items-center
+                  justify-center
+                  rounded-full
+                  border
+                  border-[#C8A96A]
+                  px-6
+                  py-3
+                  text-sm
+                  text-[#C8A96A]
+                  transition
+                  hover:bg-[#C8A96A]
+                  hover:text-white
+
+                  sm:w-auto
+                  sm:px-7
+                  sm:text-base
+                "
               >
                 Télécharger le fichier .ics
               </a>
-
             </div>
-
           </div>
-
         </motion.div>
-
       </div>
-
     </section>
-
   );
-
 }

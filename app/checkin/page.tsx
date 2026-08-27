@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { Html5QrcodeScanner } from "html5-qrcode";
 import { supabase } from "@/lib/supabase";
 import Link from "next/link";
-//import { getUserRole } from "@/lib/auth";
+import { getUserRole } from "@/lib/auth";
 
 export default function CheckInPage() {
 
@@ -173,35 +173,7 @@ if (!reader) {
 
 	}		
 	
-	
-	/*async function checkAccess() {
 
-  const role =
-    await getUserRole();
-
-  if (
-    role !== "staff" &&
-    role !== "super_admin"
-  ) {
-
-    window.location.href = "/";
-    return;
-
-  }
-
-  setLoading(false);
-
-}*/
-		
-		/*if (loading) {
-
-		  return (
-			<div>
-			  Vérification...
-			</div>
-		  );
-
-		}*/
 	  async function logout() {
 
 		  await supabase.auth.signOut();
@@ -211,7 +183,7 @@ if (!reader) {
 
 		}
 		
-		//if (loading){
+		
   return (
     <main className="min-h-screen p-6">
 

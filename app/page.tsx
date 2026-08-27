@@ -111,10 +111,6 @@ import Gallery from "@/component/Gallery";
 
 import Program from "@/component/Program";
 
-import GuestBook2 from "@/component/GuestBook2";
-
-
-
 import RSVP from "@/component/RSVP";
 
 import GuestBook from "@/component/GuestBook";
@@ -170,8 +166,6 @@ return(
 <RSVP/>
 
 <GuestBook/>
-
-<GuestBook2/>
 
 <Footer/>
 

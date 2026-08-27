@@ -95,6 +95,23 @@ font-family:var(--font-script);
   filter: drop-shadow(0 0 8px rgba(255,255,255,.35));
 }
 
+@layer components {
+  .input {
+    @apply ml-3 min-w-0 w-full bg-transparent py-3 text-sm text-gray-700 outline-none placeholder:text-gray-400;
+  }
+
+  .select {
+    @apply w-full rounded-2xl border border-[#DDD8CF] bg-white/80 px-4 py-3.5 text-sm text-gray-700 outline-none transition focus:border-[#A8B5A2] focus:ring-2 focus:ring-[#A8B5A2]/20;
+  }
+
+  .textarea {
+    @apply w-full resize-none rounded-2xl border border-[#DDD8CF] bg-white/80 px-4 py-4 text-sm text-gray-700 outline-none transition placeholder:text-gray-400 focus:border-[#A8B5A2] focus:ring-2 focus:ring-[#A8B5A2]/20;
+  }
+
+  .label {
+    @apply mb-2 block text-sm font-medium text-[#556B5D];
+  }
+}
 .light{
 position:absolute;
 top:20%;
