@@ -17,7 +17,8 @@ export default function Footer() {
 
     </footer>
   );
-}*/
+}
+*/
 
 "use client";
 
@@ -27,32 +28,31 @@ import { supabase } from "@/lib/supabase";
 import { getUserRole } from "@/lib/auth";
 
 export default function Footer() {
-const [user, setUser] = useState<any>(null);
+  const [user, setUser] = useState<any>(null);
   const [loading, setLoading] = useState(true);
-  const [role, setRole] = useState(true);
+
+  // Correction : role est une chaîne ou null, pas un boolean
+  const [role, setRole] = useState<string | null>(null);
 
   useEffect(() => {
     // Vérifier la session actuelle
-const getSession = async () => {
+    const getSession = async () => {
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
 
-  const {
-    data: { session },
-  } = await supabase.auth.getSession();
+      setUser(session?.user ?? null);
 
-  setUser(session?.user ?? null);
+      if (session?.user) {
+        const userRole = await getUserRole();
 
-  if (session?.user) {
+        setRole(userRole);
+      } else {
+        setRole(null);
+      }
 
-    const role =
-      await getUserRole();
-
-    setRole(role);
-
-  }
-
-  setLoading(false);
-
-};
+      setLoading(false);
+    };
 
     getSession();
 
@@ -62,6 +62,12 @@ const getSession = async () => {
     } = supabase.auth.onAuthStateChange(
       (_event, session) => {
         setUser(session?.user ?? null);
+
+        // Si l'utilisateur est déconnecté,
+        // on supprime également son rôle
+        if (!session?.user) {
+          setRole(null);
+        }
       }
     );
 
@@ -80,6 +86,9 @@ const getSession = async () => {
         "Erreur de déconnexion :",
         error
       );
+    } else {
+      setUser(null);
+      setRole(null);
     }
 
     setLoading(false);
@@ -99,7 +108,7 @@ const getSession = async () => {
           Marie
         </h2>
 
-        <p className="mx-auto mt-6 max-w-xl text-sm text-center leading-7 text-white/80 sm:text-base">
+        <p className="mx-auto mt-6 max-w-xl text-center text-sm leading-7 text-white/80 sm:text-base">
           Merci de partager ce moment inoubliable
           avec nous.
         </p>
@@ -171,58 +180,14 @@ const getSession = async () => {
           </div>
         )}
 
-        {/* Administration */}
-		
-	{/*	{user && role && (
-
-  <div
-    className="
-      mt-5
-      flex
-      justify-center
-    "
-  >
-
-    <a
-      href={
-        role === "super_admin"
-          ? "/admin"
-          : "/checkin/staff"
-      }
-      className="
-        inline-flex
-        items-center
-        gap-2
-        rounded-full
-        border
-        border-[#D8C7A3]
-        bg-white/10
-        px-5
-        py-2
-        text-sm
-        backdrop-blur-xl
-        hover:bg-white/20
-        transition
-      "
-    >
-      💍
-
-      {role === "super_admin"
-        ? "Administration"
-        : "Espace Staff"}
-
-    </a>
-
-  </div>
-
-)}*/}
-        {user && (
+        {/* Administration / espace staff */}
+        {user && role && (
           <a
             href={
-        role === "super_admin"
-          ? "/admin"
-          : "/checkin/staff"
-      }
+              role === "super_admin"
+                ? "/admin"
+                : "/checkin/staff"
+            }
             className="
               mt-5
               inline-flex
@@ -235,10 +200,10 @@ const getSession = async () => {
             "
           >
             <ShieldCheck size={15} />
- {role === "super_admin"
-        ? "Espace administration"
-        : "Espace Staff"}
-           
+
+            {role === "super_admin"
+              ? "Espace administration"
+              : "Espace Staff"}
           </a>
         )}
 

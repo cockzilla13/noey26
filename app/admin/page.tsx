@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { getUserRole } from "@/lib/auth";
 import LogoutButton from "@/component/LogoutButton";
+import { supabase } from "@/lib/supabase";
 
 export default function AdminPage() {
 
