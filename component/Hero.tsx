@@ -508,7 +508,9 @@ export default function Hero() {
             lg:text-9xl
           "
         >
-          JF
+
+          Donald Kevin
+
         </motion.h1>
 
         {/* =========================================
@@ -563,7 +565,9 @@ export default function Hero() {
             lg:text-9xl
           "
         >
-          RA
+
+          Marie
+
         </motion.h1>
 
         {/* =========================================

@@ -96,9 +96,9 @@ export default function Loader({ onFinish }: LoaderProps) {
 
       setTimeout(() => {
         onFinish();
-      }, 1200);
+      }, 1300);
 
-    }, 4500);
+    }, 5500);
 
     return () => clearTimeout(timer);
   }, [onFinish]);
