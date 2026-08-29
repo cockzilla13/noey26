@@ -14,6 +14,8 @@ import {
 
 import { supabase } from "@/lib/supabase";
 import InvitationQRCode from "./InvitationQRCode";
+import { trackVisitor }
+from "@/lib/trackVisitor";
 
 export default function RSVP() {
   const [loading, setLoading] = useState(false);
@@ -22,6 +24,11 @@ export default function RSVP() {
     useState<string | null>(null);
   const [error, setError] = useState("");
 
+// watch
+
+trackVisitor("rsvp");
+
+//
   async function handleSubmit(
     event: FormEvent<HTMLFormElement>
   ) {

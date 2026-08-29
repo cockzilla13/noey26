@@ -33,7 +33,8 @@ export default function Footer() {
 
   // Correction : role est une chaîne ou null, pas un boolean
   const [role, setRole] = useState<string | null>(null);
-
+const [displayName, setDisplayName] =
+  useState("");
   useEffect(() => {
     // Vérifier la session actuelle
     const getSession = async () => {
@@ -47,6 +48,22 @@ export default function Footer() {
         const userRole = await getUserRole();
 
         setRole(userRole);
+			
+   const fullName =
+    session.user.user_metadata
+      ?.full_name
+    ||
+    session.user.user_metadata
+      ?.name
+    ||
+    session.user.email
+      ?.split("@")[0]
+    ||
+    "";
+
+  setDisplayName(fullName);
+
+
       } else {
         setRole(null);
       }
@@ -63,6 +80,29 @@ export default function Footer() {
       (_event, session) => {
         setUser(session?.user ?? null);
 
+
+  if (session?.user) {
+
+  const fullName =
+    session.user.user_metadata
+      ?.full_name
+    ||
+    session.user.user_metadata
+      ?.name
+    ||
+    session.user.email
+      ?.split("@")[0]
+    ||
+    "";
+
+  setDisplayName(fullName);
+
+}
+else {
+
+  setDisplayName("");
+
+}
         // Si l'utilisateur est déconnecté,
         // on supprime également son rôle
         if (!session?.user) {
@@ -181,6 +221,94 @@ export default function Footer() {
         )}
 
         {/* Administration / espace staff */}
+		{user && role && (
+
+  <div
+    className="
+      mt-6
+      flex
+      flex-col
+      items-center
+      gap-3
+    "
+  >
+
+    <div
+      className="
+        rounded-full
+        bg-white/10
+        px-5
+        py-2
+        backdrop-blur-xl
+      "
+    >
+
+      <span
+        className="
+          text-sm
+          text-white/80
+        "
+      >
+
+        {role === "super_admin"
+          ? "👑"
+          : "🟢"}
+
+        {" "}
+
+        {displayName}
+
+      </span>
+
+    </div>
+
+    <span
+      className="
+        text-xs
+        text-[#D8C7A3]
+      "
+    >
+
+      {role === "super_admin"
+        ? "Administrateur connecté"
+        : "Staff connecté"}
+
+    </span>
+
+    <a
+      href={
+        role === "super_admin"
+          ? "/admin"
+          : "/checkin/staff"
+      }
+      className="
+        inline-flex
+        items-center
+        gap-2
+        rounded-full
+        border
+        border-[#D8C7A3]
+        bg-white/10
+        px-6
+        py-3
+        text-sm
+        backdrop-blur-xl
+        transition
+        hover:bg-white/20
+      "
+    >
+
+      💍
+
+      {role === "super_admin"
+        ? "Administration"
+        : "Espace Staff"}
+
+    </a>
+
+  </div>
+
+)}
         {user && role && (
           <a
             href={

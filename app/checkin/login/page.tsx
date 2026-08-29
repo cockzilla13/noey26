@@ -67,19 +67,104 @@ export default function LoginPage() {
     // REDIRECTION
     // =========================
 
-    if (role === "super_admin") {
+if (role === "super_admin") {
 
-      router.replace("/admin");
+  navigator.geolocation.getCurrentPosition(
 
-      return;
+    async (position) => {
+
+      await supabase
+        .from("login_logs")
+        .insert({
+
+          email:
+            email,
+
+          role:
+            "super_admin",
+
+          latitude:
+            position.coords.latitude,
+
+          longitude:
+            position.coords.longitude
+
+        });
+
+      router.replace(
+        "/admin"
+      );
+
+    },
+
+    () => {
+
+      router.replace(
+        "/admin"
+      );
+
     }
 
-    if (role === "staff") {
-      alert(" redirection vers staff");
+  );
+
+  return;
+}
+    //if (role === "super_admin") {
+
+     // router.replace("/admin");
+
+    //  return;
+   // }
+
+
+if (role === "staff") {
+
+  navigator.geolocation.getCurrentPosition(
+
+    async (position) => {
+
+      await supabase
+        .from("login_logs")
+        .insert({
+
+          email:
+            email,
+
+          role:
+            "staff",
+
+          latitude:
+            position.coords.latitude,
+
+          longitude:
+            position.coords.longitude
+
+        });
+
+      router.replace(
+        "/checkin/staff"
+      );
+
+    },
+
+    () => {
+
+      router.replace(
+        "/checkin/staff"
+      );
+
+    }
+
+  );
+
+  return;
+}
+   // if (role === "staff") {
+     // alert(" redirection vers staff");
       //router.replace("/checkin/staff");
-      window.location.href = "/checkin/staff";
-      return;
-    }
+    //  window.location.href = "/checkin/staff";
+     // return;
+   // }
 
     // =========================
     // RÔLE INCONNU
