@@ -12,13 +12,133 @@ import {
   CalendarDays,
   Navigation,
   Sparkles,
+  Apple,
+  Download,
 } from "lucide-react";
+
+/*
+|--------------------------------------------------------------------------
+| CONFIGURATION DU MARIAGE
+|--------------------------------------------------------------------------
+*/
+
+const VENUE = {
+  name: "Mpolongwe – Kribi",
+
   /*
-   * Lieu du mariage
+   * 3°02'15.7"N
    */
-  const mapsQuery = encodeURIComponent(
-	 `"3°02'15.7"N 9°57'49.5"E"`
-  );
+  latitude: 3.037694,
+
+  /*
+   * 9°57'49.5"E
+   */
+  longitude: 9.963750,
+
+  coordinates: "3.037694,9.963750",
+};
+
+const WEDDING_DATE = "12 décembre 2026";
+
+/*
+|--------------------------------------------------------------------------
+| LIENS CARTOGRAPHIE
+|--------------------------------------------------------------------------
+*/
+
+/*
+ * Google Maps Web
+ *
+ * Utilisé sur Windows, Mac et comme solution de secours.
+ * Les coordonnées GPS sont utilisées directement.
+ */
+const googleMapsWeb =
+  "https://www.google.com/maps/dir/?api=1" +
+  `&destination=${encodeURIComponent(VENUE.coordinates)}` +
+  "&travelmode=driving";
+
+/*
+ * Google Maps Android
+ *
+ * geo: permet de demander à Android d'ouvrir une application
+ * de cartographie installée.
+ */
+const androidMaps =
+  `geo:${VENUE.latitude},${VENUE.longitude}` +
+  `?q=${VENUE.latitude},${VENUE.longitude}` +
+  `(Mpolongwe%20-%20Kribi)`;
+
+/*
+ * Google Maps iOS
+ *
+ * Essaie d'ouvrir directement l'application Google Maps
+ * sur iPhone / iPad.
+ */
+const iosGoogleMaps =
+  `comgooglemaps://?daddr=${VENUE.latitude},${VENUE.longitude}` +
+  "&directionsmode=driving";
+
+/*
+ * Apple Plans
+ *
+ * Coordonnées GPS utilisées directement.
+ */
+const appleMaps =
+  "https://maps.apple.com/?" +
+  `ll=${VENUE.latitude},${VENUE.longitude}` +
+  `&q=${encodeURIComponent(VENUE.name)}`;
+
+/*
+|--------------------------------------------------------------------------
+| GOOGLE CALENDAR
+|--------------------------------------------------------------------------
+|
+| Le mariage commence à 15h00 au Cameroun.
+| Africa/Douala = UTC+1
+|
+| 15h00 locale = 14h00 UTC
+| 23h59 locale = 22h59 UTC
+|--------------------------------------------------------------------------
+*/
+
+const googleCalendarUrl =
+  "https://calendar.google.com/calendar/render?" +
+  new URLSearchParams({
+    action: "TEMPLATE",
+
+    text: "Mariage Donald Kevin & Marie",
+
+    dates: "20261212T140000Z/20261212T225900Z",
+
+    ctz: "Africa/Douala",
+
+    location:
+      `${VENUE.name} - ${VENUE.coordinates}`,
+
+    details:
+      "Programme du mariage :\n\n" +
+      "15h00 – Cérémonie\n" +
+      "17h30 – Cocktail\n" +
+      "19h00 – Réception\n" +
+      "21h30 – Première danse\n" +
+      "22h00 – Soirée dansante\n\n" +
+      `Coordonnées GPS : ${VENUE.coordinates}`,
+  }).toString();
+
+/*
+|--------------------------------------------------------------------------
+| FICHIER ICS
+|--------------------------------------------------------------------------
+*/
+
+const icsUrl = "/calendar/mariage.ics";
+
+/*
+|--------------------------------------------------------------------------
+| PROGRAMME
+|--------------------------------------------------------------------------
+*/
+
 const events = [
   {
     time: "15:00",
@@ -57,6 +177,160 @@ const events = [
   },
 ];
 
+/*
+|--------------------------------------------------------------------------
+| DÉTECTION DE L'APPAREIL
+|--------------------------------------------------------------------------
+*/
+
+const getDevice = () => {
+  if (typeof navigator === "undefined") {
+    return "desktop";
+  }
+
+  const userAgent =
+    navigator.userAgent ||
+    navigator.vendor ||
+    "";
+
+  /*
+   * Android
+   */
+  if (/android/i.test(userAgent)) {
+    return "android";
+  }
+
+  /*
+   * iPhone / iPad / iPod
+   *
+   * Le second test permet aussi de détecter certains iPad
+   * récents qui se présentent comme des Mac.
+   */
+  if (
+    /iPad|iPhone|iPod/i.test(userAgent) ||
+    (
+      navigator.platform === "MacIntel" &&
+      navigator.maxTouchPoints > 1
+    )
+  ) {
+    return "ios";
+  }
+
+  return "desktop";
+};
+
+/*
+|--------------------------------------------------------------------------
+| OUVRIR LE LIEU DANS MAPS
+|--------------------------------------------------------------------------
+*/
+
+const handleMaps = () => {
+  const device = getDevice();
+
+  /*
+   * ---------------------------------------------------------------
+   * ANDROID
+   * ---------------------------------------------------------------
+   *
+   * On essaie d'abord l'application cartographique.
+   * Si elle ne répond pas, on ouvre Google Maps Web.
+   */
+  if (device === "android") {
+    let fallbackTriggered = false;
+
+    const fallback = () => {
+      if (fallbackTriggered) return;
+
+      fallbackTriggered = true;
+
+      window.location.href = googleMapsWeb;
+    };
+
+    const timer = window.setTimeout(
+      fallback,
+      1200
+    );
+
+    const handleBlur = () => {
+      window.clearTimeout(timer);
+      window.removeEventListener(
+        "blur",
+        handleBlur
+      );
+    };
+
+    window.addEventListener(
+      "blur",
+      handleBlur
+    );
+
+    window.location.href = androidMaps;
+
+    return;
+  }
+
+  /*
+   * ---------------------------------------------------------------
+   * IPHONE / IPAD
+   * ---------------------------------------------------------------
+   *
+   * On tente Google Maps.
+   * Si Google Maps n'est pas installé, on ouvre Apple Plans.
+   */
+  if (device === "ios") {
+    let fallbackTriggered = false;
+
+    const fallback = () => {
+      if (fallbackTriggered) return;
+
+      fallbackTriggered = true;
+
+      window.location.href = appleMaps;
+    };
+
+    const timer = window.setTimeout(
+      fallback,
+      1200
+    );
+
+    const handleBlur = () => {
+      window.clearTimeout(timer);
+      window.removeEventListener(
+        "blur",
+        handleBlur
+      );
+    };
+
+    window.addEventListener(
+      "blur",
+      handleBlur
+    );
+
+    window.location.href = iosGoogleMaps;
+
+    return;
+  }
+
+  /*
+   * ---------------------------------------------------------------
+   * WINDOWS / MAC / AUTRE
+   * ---------------------------------------------------------------
+   */
+
+  window.open(
+    googleMapsWeb,
+    "_blank",
+    "noopener,noreferrer"
+  );
+};
+
+/*
+|--------------------------------------------------------------------------
+| COMPOSANT
+|--------------------------------------------------------------------------
+*/
+
 export default function Program() {
   return (
     <section
@@ -76,9 +350,10 @@ export default function Program() {
         lg:py-32
       "
     >
-      {/* =========================================
+
+      {/* =========================================================
           DÉCOR
-      ========================================= */}
+      ========================================================= */}
 
       <div
         className="
@@ -116,11 +391,20 @@ export default function Program() {
         "
       />
 
-      {/* =========================================
-          PETITES ÉTOILES DÉCORATIVES
-      ========================================= */}
+      {/* =========================================================
+          ÉTOILES
+      ========================================================= */}
 
-      <div className="pointer-events-none absolute inset-0 hidden opacity-10 sm:block">
+      <div
+        className="
+          pointer-events-none
+          absolute
+          inset-0
+          hidden
+          opacity-10
+          sm:block
+        "
+      >
         <Sparkles
           className="
             absolute
@@ -176,14 +460,23 @@ export default function Program() {
         />
       </div>
 
-      {/* =========================================
+      {/* =========================================================
           CONTENU
-      ========================================= */}
+      ========================================================= */}
 
-      <div className="relative z-10 mx-auto w-full max-w-7xl">
-        {/* =========================================
+      <div
+        className="
+          relative
+          z-10
+          mx-auto
+          w-full
+          max-w-7xl
+        "
+      >
+
+        {/* =======================================================
             TITRE
-        ========================================= */}
+        ======================================================= */}
 
         <motion.div
           initial={{
@@ -201,8 +494,13 @@ export default function Program() {
           transition={{
             duration: 0.7,
           }}
-          className="mx-auto max-w-3xl text-center"
+          className="
+            mx-auto
+            max-w-3xl
+            text-center
+          "
         >
+
           <h2
             className="
               font-serif
@@ -238,13 +536,24 @@ export default function Program() {
             Chaque instant de cette journée a été imaginé avec amour.
             Nous serions honorés de partager ces précieux moments avec vous.
           </p>
+
         </motion.div>
 
-        {/* =========================================
-            TIMELINE
-        ========================================= */}
 
-        <div className="relative mt-14 sm:mt-20 lg:mt-24">
+        {/* =======================================================
+            TIMELINE
+        ======================================================= */}
+
+        <div
+          className="
+            relative
+            mt-14
+
+            sm:mt-20
+
+            lg:mt-24
+          "
+        >
 
           {/* Ligne mobile */}
 
@@ -323,6 +632,7 @@ export default function Program() {
 
                   md:mb-16
                   md:pl-0
+
                   ${
                     left
                       ? "md:justify-start"
@@ -330,6 +640,7 @@ export default function Program() {
                   }
                 `}
               >
+
                 {/* Point mobile */}
 
                 <div
@@ -353,7 +664,14 @@ export default function Program() {
                     sm:left-5
                   "
                 >
-                  <div className="h-1.5 w-1.5 rounded-full bg-white" />
+                  <div
+                    className="
+                      h-1.5
+                      w-1.5
+                      rounded-full
+                      bg-white
+                    "
+                  />
                 </div>
 
                 {/* Point desktop */}
@@ -380,10 +698,17 @@ export default function Program() {
                     md:flex
                   "
                 >
-                  <div className="h-2 w-2 rounded-full bg-white" />
+                  <div
+                    className="
+                      h-2
+                      w-2
+                      rounded-full
+                      bg-white
+                    "
+                  />
                 </div>
 
-                {/* Carte */}
+                {/* Carte événement */}
 
                 <motion.div
                   whileHover={{
@@ -403,9 +728,11 @@ export default function Program() {
                     sm:rounded-3xl
 
                     md:w-[44%]
+
                     lg:w-[45%]
                   "
                 >
+
                   {/* En-tête */}
 
                   <div
@@ -419,7 +746,15 @@ export default function Program() {
                       sm:p-6
                     "
                   >
-                    <div className="flex items-center gap-4">
+
+                    <div
+                      className="
+                        flex
+                        items-center
+                        gap-4
+                      "
+                    >
+
                       <div
                         className="
                           flex
@@ -441,11 +776,15 @@ export default function Program() {
                       >
                         <Icon
                           size={24}
-                          className="sm:h-7 sm:w-7"
+                          className="
+                            sm:h-7
+                            sm:w-7
+                          "
                         />
                       </div>
 
                       <div className="min-w-0">
+
                         <p
                           className="
                             text-xs
@@ -473,8 +812,11 @@ export default function Program() {
                         >
                           {event.title}
                         </h3>
+
                       </div>
+
                     </div>
+
                   </div>
 
                   {/* Corps */}
@@ -488,6 +830,7 @@ export default function Program() {
                       lg:p-8
                     "
                   >
+
                     <p
                       className="
                         text-sm
@@ -502,16 +845,21 @@ export default function Program() {
                     >
                       {event.description}
                     </p>
+
                   </div>
+
                 </motion.div>
+
               </motion.div>
             );
           })}
+
         </div>
 
-        {/* =========================================
+
+        {/* =======================================================
             DRESS CODE
-        ========================================= */}
+        ======================================================= */}
 
         <motion.div
           initial={{
@@ -529,8 +877,15 @@ export default function Program() {
           transition={{
             duration: 0.7,
           }}
-          className="mt-16 sm:mt-20 lg:mt-24"
+          className="
+            mt-16
+
+            sm:mt-20
+
+            lg:mt-24
+          "
         >
+
           <div
             className="
               rounded-2xl
@@ -548,6 +903,7 @@ export default function Program() {
               lg:p-10
             "
           >
+
             {/* Header */}
 
             <div
@@ -562,6 +918,7 @@ export default function Program() {
                 sm:text-left
               "
             >
+
               <div
                 className="
                   flex
@@ -581,7 +938,15 @@ export default function Program() {
                 <Shirt size={26} />
               </div>
 
-              <div className="mt-4 sm:ml-4 sm:mt-0">
+              <div
+                className="
+                  mt-4
+
+                  sm:ml-4
+                  sm:mt-0
+                "
+              >
+
                 <h3
                   className="
                     font-serif
@@ -594,10 +959,20 @@ export default function Program() {
                   Dress Code
                 </h3>
 
-                <p className="mt-1 text-sm text-gray-500 sm:text-base">
+                <p
+                  className="
+                    mt-1
+                    text-sm
+                    text-gray-500
+
+                    sm:text-base
+                  "
+                >
                   Élégance • Nature • Raffinement
                 </p>
+
               </div>
+
             </div>
 
             {/* Couleurs */}
@@ -615,6 +990,7 @@ export default function Program() {
                 lg:gap-8
               "
             >
+
               {/* Blanc cassé */}
 
               <div
@@ -628,6 +1004,7 @@ export default function Program() {
                   sm:p-8
                 "
               >
+
                 <div
                   className="
                     mx-auto
@@ -656,6 +1033,7 @@ export default function Program() {
                 >
                   Blanc cassé
                 </h4>
+
               </div>
 
               {/* Vert sauge */}
@@ -672,6 +1050,7 @@ export default function Program() {
                   sm:p-8
                 "
               >
+
                 <div
                   className="
                     mx-auto
@@ -699,6 +1078,7 @@ export default function Program() {
                 >
                   Vert Sauge
                 </h4>
+
               </div>
 
               {/* Champagne */}
@@ -714,6 +1094,7 @@ export default function Program() {
                   sm:p-8
                 "
               >
+
                 <div
                   className="
                     mx-auto
@@ -742,14 +1123,19 @@ export default function Program() {
                 >
                   Champagne
                 </h4>
+
               </div>
+
             </div>
+
           </div>
+
         </motion.div>
 
-        {/* =========================================
+
+        {/* =======================================================
             LIEU
-        ========================================= */}
+        ======================================================= */}
 
         <motion.div
           initial={{
@@ -767,8 +1153,15 @@ export default function Program() {
           transition={{
             duration: 0.7,
           }}
-          className="mt-12 sm:mt-16 lg:mt-20"
+          className="
+            mt-12
+
+            sm:mt-16
+
+            lg:mt-20
+          "
         >
+
           <div
             className="
               rounded-2xl
@@ -786,7 +1179,10 @@ export default function Program() {
               lg:p-10
             "
           >
-            {/* Informations */}
+
+            {/* =================================================
+                INFORMATIONS DU LIEU
+            ================================================= */}
 
             <div
               className="
@@ -800,6 +1196,7 @@ export default function Program() {
                 sm:text-left
               "
             >
+
               <div
                 className="
                   flex
@@ -819,7 +1216,15 @@ export default function Program() {
                 <MapPin size={26} />
               </div>
 
-              <div className="mt-4 sm:ml-5 sm:mt-0">
+              <div
+                className="
+                  mt-4
+
+                  sm:ml-5
+                  sm:mt-0
+                "
+              >
+
                 <h3
                   className="
                     font-serif
@@ -829,41 +1234,185 @@ export default function Program() {
                     sm:text-3xl
                   "
                 >
-                  Mpolongwe – Kribi
+                  {VENUE.name}
                 </h3>
 
-                <p className="mt-2 text-sm leading-6 text-gray-600 sm:text-base">
+                <p
+                  className="
+                    mt-2
+                    text-sm
+                    leading-6
+                    text-gray-600
+
+                    sm:text-base
+                  "
+                >
+                  {WEDDING_DATE}
+                  <br />
                   Cérémonie : 15h00
                   <br />
                   Réception : 19h00
                 </p>
+
+                <p
+                  className="
+                    mt-3
+                    text-xs
+                    text-gray-500
+
+                    sm:text-sm
+                  "
+                >
+                  📍 {VENUE.latitude}, {VENUE.longitude}
+                </p>
+
               </div>
+
             </div>
 
-            {/* Boutons */}
+
+            {/* =================================================
+                CARTE
+            ================================================= */}
 
             <div
               className="
+                relative
                 mt-8
-                flex
-                flex-col
-                gap-3
+                overflow-hidden
+                rounded-2xl
+                border
+                border-white/60
+                bg-[#E8E5DE]
+                shadow-xl
 
-                sm:flex-row
-                sm:flex-wrap
-                sm:gap-4
-
-                lg:mt-10
+                sm:rounded-3xl
               "
             >
-              <a
-                href="https://www.google.com/maps/search/Mpolongwe+-+Kribi"
-                target="_blank"
-                rel="noopener noreferrer"
+
+              {/* Badge */}
+
+              <div
+                className="
+                  pointer-events-none
+                  absolute
+                  left-4
+                  top-4
+                  z-10
+                  rounded-full
+                  bg-white/95
+                  px-4
+                  py-2
+                  text-xs
+                  font-medium
+                  text-[#556B5D]
+                  shadow-lg
+                  backdrop-blur
+
+                  sm:text-sm
+                "
+              >
+                📍 Mpolongwe – Kribi
+              </div>
+
+              {/* Carte Google Maps */}
+
+              <iframe
+                title="Carte du lieu du mariage à Mpolongwe – Kribi"
+                src={
+                  `https://www.google.com/maps?q=` +
+                  encodeURIComponent(
+                    VENUE.coordinates
+                  ) +
+                  `&z=16&output=embed`
+                }
+                className="
+                  h-[300px]
+                  w-full
+                  border-0
+
+                  sm:h-[380px]
+
+                  lg:h-[430px]
+                "
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+              />
+
+            </div>
+
+
+            {/* =================================================
+                COORDONNÉES
+            ================================================= */}
+
+            <div
+              className="
+                mt-5
+                rounded-2xl
+                bg-[#F8F5EF]/80
+                p-4
+                text-center
+
+                sm:p-5
+              "
+            >
+
+              <p
+                className="
+                  text-xs
+                  uppercase
+                  tracking-[0.18em]
+                  text-[#556B5D]
+                "
+              >
+                Coordonnées GPS
+              </p>
+
+              <p
+                className="
+                  mt-2
+                  font-mono
+                  text-sm
+                  font-medium
+                  text-gray-600
+
+                  sm:text-base
+                "
+              >
+                {VENUE.latitude}° N
+                {" · "}
+                {VENUE.longitude}° E
+              </p>
+
+            </div>
+
+
+            {/* =================================================
+                BOUTONS MAPS
+            ================================================= */}
+
+            <div
+              className="
+                mt-6
+                grid
+                grid-cols-1
+                gap-3
+
+                sm:grid-cols-2
+
+                lg:grid-cols-3
+              "
+            >
+
+              {/* Bouton intelligent */}
+
+              <button
+                type="button"
+                onClick={handleMaps}
                 className="
                   inline-flex
-                  min-h-[52px]
-                  w-full
+                  min-h-[54px]
                   items-center
                   justify-center
                   gap-3
@@ -872,29 +1421,36 @@ export default function Program() {
                   px-6
                   py-3
                   text-sm
+                  font-medium
                   text-white
                   shadow-xl
                   transition
+                  duration-300
                   hover:scale-[1.02]
+                  hover:shadow-2xl
+                  active:scale-95
 
-                  sm:w-auto
-                  sm:px-7
                   sm:text-base
                 "
               >
-			  
-                <Navigation size={19} />
-                Itinéraire Google Maps
-              </a>
+
+                <Navigation size={20} />
+
+                <span>
+               Itinéraire                </span>
+
+              </button>
+
+
+              {/* Google Maps */}
 
               <a
-                href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Mariage+Donald+Kevin+%26+Marie"
+                href={googleMapsWeb}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="
                   inline-flex
-                  min-h-[52px]
-                  w-full
+                  min-h-[54px]
                   items-center
                   justify-center
                   gap-3
@@ -904,50 +1460,257 @@ export default function Program() {
                   px-6
                   py-3
                   text-sm
+                  font-medium
                   text-[#556B5D]
                   transition
+                  duration-300
                   hover:bg-[#556B5D]
                   hover:text-white
 
-                  sm:w-auto
-                  sm:px-7
                   sm:text-base
                 "
               >
-                <CalendarDays size={19} />
-                Google Calendar
+
+                <Navigation size={20} />
+
+                Google Maps
+
               </a>
 
+
+              {/* Apple Plans */}
+
               <a
-                href="/calendar/mariage.ics"
+                href={appleMaps}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="
                   inline-flex
-                  min-h-[52px]
-                  w-full
+                  min-h-[54px]
                   items-center
                   justify-center
+                  gap-3
                   rounded-full
-                  border
-                  border-[#C8A96A]
+                  bg-black
                   px-6
                   py-3
                   text-sm
-                  text-[#C8A96A]
+                  font-medium
+                  text-white
                   transition
-                  hover:bg-[#C8A96A]
-                  hover:text-white
+                  duration-300
+                  hover:scale-[1.02]
 
-                  sm:w-auto
-                  sm:px-7
                   sm:text-base
                 "
               >
-                Télécharger le fichier .ics
+
+                <Apple size={20} />
+
+                Apple Plans
+
               </a>
+
             </div>
+
+
+            {/* =================================================
+                CALENDRIER
+            ================================================= */}
+
+            <div
+              className="
+                mt-8
+                border-t
+                border-gray-200/70
+                pt-8
+              "
+            >
+
+              <div
+                className="
+                  flex
+                  flex-col
+                  items-center
+                  text-center
+                "
+              >
+
+                <div
+                  className="
+                    flex
+                    h-14
+                    w-14
+                    items-center
+                    justify-center
+                    rounded-full
+                    bg-[#C8A96A]
+                    text-white
+                    shadow-lg
+                  "
+                >
+                  <CalendarDays size={25} />
+                </div>
+
+                <h3
+                  className="
+                    mt-4
+                    font-serif
+                    text-2xl
+                    text-[#556B5D]
+
+                    sm:text-3xl
+                  "
+                >
+                  Ajouter à votre calendrier
+                </h3>
+
+                <p
+                  className="
+                    mt-2
+                    max-w-xl
+                    text-sm
+                    leading-6
+                    text-gray-600
+
+                    sm:text-base
+                  "
+                >
+                  Gardez cette belle journée dans votre agenda.
+                  Compatible avec Google Calendar, Apple Calendar,
+                  Outlook, Windows et les calendriers Android.
+                </p>
+
+              </div>
+
+
+              {/* Boutons calendrier */}
+
+              <div
+                className="
+                  mt-6
+                  grid
+                  grid-cols-1
+                  gap-3
+
+                  sm:grid-cols-2
+                "
+              >
+
+                {/* Google Calendar */}
+
+                <a
+                  href={googleCalendarUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="
+                    inline-flex
+                    min-h-[54px]
+                    items-center
+                    justify-center
+                    gap-3
+                    rounded-full
+                    bg-[#556B5D]
+                    px-6
+                    py-3
+                    text-sm
+                    font-medium
+                    text-white
+                    shadow-xl
+                    transition
+                    duration-300
+                    hover:scale-[1.02]
+
+                    sm:text-base
+                  "
+                >
+
+                  <CalendarDays size={20} />
+
+                  Google Calendar
+
+                </a>
+
+
+                {/* ICS */}
+
+                <a
+                  href={icsUrl}
+                  download="mariage-donald-kevin-marie.ics"
+                  className="
+                    inline-flex
+                    min-h-[54px]
+                    items-center
+                    justify-center
+                    gap-3
+                    rounded-full
+                    border
+                    border-[#C8A96A]
+                    px-6
+                    py-3
+                    text-sm
+                    font-medium
+                    text-[#C8A96A]
+                    transition
+                    duration-300
+                    hover:bg-[#C8A96A]
+                    hover:text-white
+
+                    sm:text-base
+                  "
+                >
+
+                  <Download size={20} />
+
+                  Télécharger le calendrier (.ics)
+
+                </a>
+
+              </div>
+
+
+              {/* Informations compatibilité */}
+
+              <div
+                className="
+                  mt-5
+                  rounded-2xl
+                  bg-[#F8F5EF]
+                  p-5
+                  text-center
+                "
+              >
+
+                <p
+                  className="
+                    text-xs
+                    leading-5
+                    text-gray-500
+
+                    sm:text-sm
+                  "
+                >
+                  {/*📱 iPhone / iPad : Apple Calendar
+                  <br />
+                  🤖 Android : Google Calendar ou autre application
+                  compatible .ics
+                  <br />
+                  💻 Windows : Outlook / calendrier Windows
+                  <br />
+                  🍎 Mac : Apple Calendar */}
+				  DK-INGTECK-solution
+                </p>
+
+              </div>
+
+            </div>
+
           </div>
+
         </motion.div>
+
       </div>
+
     </section>
   );
 }

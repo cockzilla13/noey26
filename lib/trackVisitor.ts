@@ -5,31 +5,57 @@ export async function trackVisitor(
  page: string
 ) {
 
- if (
-  !navigator.geolocation
- ) return;
+ try {
 
- navigator.geolocation.getCurrentPosition(
+  if (
+   !navigator.geolocation
+  ) {
 
- async (position) => {
+   await supabase
+    .from("visitor_logs")
+    .insert({
 
-  await supabase
-   .from("visitor_logs")
-   .insert({
+     page,
 
-    page,
+     device:
+      navigator.userAgent
 
-    latitude:
-     position.coords.latitude,
+    });
 
-    longitude:
-     position.coords.longitude,
+   return;
 
-    device:
-     navigator.userAgent
+  }
 
-   });
+  navigator.geolocation
+   .getCurrentPosition(
 
- });
+    async (position) => {
+
+     await supabase
+      .from("visitor_logs")
+      .insert({
+
+       page,
+
+       latitude:
+        position.coords.latitude,
+
+       longitude:
+        position.coords.longitude,
+
+       device:
+        navigator.userAgent
+
+      });
+
+    }
+
+   );
+
+ } catch (err) {
+
+  console.error(err);
+
+ }
 
 }

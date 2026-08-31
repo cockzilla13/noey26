@@ -4,7 +4,8 @@ import { useState } from "react";
 import { supabase } from "@/lib/supabase";
 import { useRouter } from "next/navigation";
 import { getUserRole } from "@/lib/auth";
-
+import { trackLogin }
+from "@/lib/trackLogin";
 export default function LoginPage() {
 
   const router = useRouter();
@@ -67,47 +68,20 @@ export default function LoginPage() {
     // REDIRECTION
     // =========================
 
-if (role === "super_admin") {
 
-  navigator.geolocation.getCurrentPosition(
+ if (role === "super_admin") {
 
-    async (position) => {
+  await trackLogin(
+    email,
+    "super_admin"
+  );
 
-      await supabase
-        .from("login_logs")
-        .insert({
-
-          email:
-            email,
-
-          role:
-            "super_admin",
-
-          latitude:
-            position.coords.latitude,
-
-          longitude:
-            position.coords.longitude
-
-        });
-
-      router.replace(
-        "/admin"
-      );
-
-    },
-
-    () => {
-
-      router.replace(
-        "/admin"
-      );
-
-    }
-
+  router.replace(
+    "/admin"
   );
 
   return;
+
 }
     //if (role === "super_admin") {
 
@@ -119,45 +93,17 @@ if (role === "super_admin") {
 
 if (role === "staff") {
 
-  navigator.geolocation.getCurrentPosition(
+  await trackLogin(
+    email,
+    "staff"
+  );
 
-    async (position) => {
-
-      await supabase
-        .from("login_logs")
-        .insert({
-
-          email:
-            email,
-
-          role:
-            "staff",
-
-          latitude:
-            position.coords.latitude,
-
-          longitude:
-            position.coords.longitude
-
-        });
-
-      router.replace(
-        "/checkin/staff"
-      );
-
-    },
-
-    () => {
-
-      router.replace(
-        "/checkin/staff"
-      );
-
-    }
-
+  router.replace(
+    "/checkin/staff"
   );
 
   return;
+
 }
    // if (role === "staff") {
      // alert(" redirection vers staff");

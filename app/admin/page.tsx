@@ -231,7 +231,8 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { getUserRole } from "@/lib/auth";
 import { supabase } from "@/lib/supabase";
-
+import { trackLogin }
+from "@/lib/trackLogin";
 export default function AdminPage() {
   const [loading, setLoading] = useState(true);
   const [role, setRole] = useState<string | null>(null);
@@ -798,6 +799,12 @@ export default function AdminPage() {
  "
 >
  📊 Composante
+</Link>
+
+<Link
+ href="/admin/connections"
+>
+ 🌍 Connexions
 </Link>
           </div>
         </section>

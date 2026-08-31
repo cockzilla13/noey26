@@ -566,9 +566,9 @@ const images = [
 ];
 
 const videos = [
-  "/videos/kribi1-web.mp4",
+  "/videos/kribi4-web.mp4",
   "/videos/kribi2-web.mp4",
-];
+ ];
 
 /* =====================================================
    VIDEO LAZY LOAD
