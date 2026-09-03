@@ -445,7 +445,7 @@ export default function AdminPage() {
           </div>
 
           <Link
-            href="/"
+            href="/#hero"
             className="
               flex
               min-h-11

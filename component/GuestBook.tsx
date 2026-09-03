@@ -8,8 +8,8 @@ import {
   Quote,
 } from "lucide-react";
 import { supabase } from "@/lib/supabase";
-import { trackVisitor } from "@/lib/trackVisitor";
-trackVisitor
+//import { trackVisitor } from "@/lib/trackVisitor";
+//trackVisitor
 type GuestMessage = {
   id: string | number;
   first_name: string;
@@ -30,7 +30,7 @@ export default function GuestBook() {
   const [error, setError] = useState("");
 
   useEffect(() => {
-  trackVisitor("guestbook");
+  //trackVisitor("guestbook");
     loadMessages();
   }, []);
 

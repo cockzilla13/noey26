@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent, useState } from "react";
+import { FormEvent, useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import {
   CalendarCheck,
@@ -14,8 +14,8 @@ import {
 
 import { supabase } from "@/lib/supabase";
 import InvitationQRCode from "./InvitationQRCode";
-import { trackVisitor }
-from "@/lib/trackVisitor";
+//import { trackVisitor }
+//from "@/lib/trackVisitor";
 
 export default function RSVP() {
   const [loading, setLoading] = useState(false);
@@ -25,9 +25,10 @@ export default function RSVP() {
   const [error, setError] = useState("");
 
 // watch
+//useEffect(() => {
 
-trackVisitor("rsvp");
-
+//trackVisitor("rsvp");
+//},[]);
 //
   async function handleSubmit(
     event: FormEvent<HTMLFormElement>
